@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kayı Atlası — Osmanlı Kuruluş Dönemi Tarih Haritaları</title>
+<meta name="description" content="Osmanlı Devleti'nin kuruluş dönemine ait 55+ tarihi harita, interaktif zaman çizelgesi ve detaylı anlatımlarla kapsamlı bir tarih atlası.">
+<meta name="keywords" content="Osmanlı, tarih, harita, atlas, Kayı, Osman Gazi, Orhan Gazi, Murad I, Yıldırım Bayezid, Fetret Devri">
+<meta property="og:title" content="Kayı Atlası — Osmanlı Kuruluş Dönemi Tarih Haritaları">
+<meta property="og:description" content="55+ tarihi harita ile Osmanlı kuruluş döneminin interaktif atlası">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;
+--gold:#c8a45c;--gold-light:#e8c87c;--gold-dim:#8a6d3b;
+--text:#e8e0d0;--text-dim:#9a9488;--text-bright:#fff;
+--accent:#c8a45c;--border:#2a2a3a;
+--font-serif:'Georgia','Times New Roman',serif;
+--font-sans:'Segoe UI','Helvetica',Arial,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* HEADER */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,15,0.3) 0%,rgba(10,10,15,0.85) 70%,var(--bg) 100%);z-index:1}
+.hero-bg{position:absolute;inset:0;background:url('haritalar/_Kaynaklar_Genel/Osmanli_1356-1897.jpg') center/cover no-repeat;filter:sepia(0.4) brightness(0.5);animation:slowZoom 30s ease-in-out infinite alternate}
+@keyframes slowZoom{0%{transform:scale(1)}100%{transform:scale(1.08)}}
+.hero-content{position:relative;z-index:2;max-width:800px;padding:2rem}
+.hero h1{font-family:var(--font-serif);font-size:clamp(2.5rem,6vw,4.5rem);color:var(--gold-light);margin-bottom:0.5rem;letter-spacing:0.04em;text-shadow:0 2px 20px rgba(200,164,92,0.3)}
+.hero .subtitle{font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text-dim);font-style:italic;margin-bottom:1.5rem}
+.hero .tagline{font-size:1rem;color:var(--text);max-width:600px;margin:0 auto 2rem;line-height:1.8}
+.hero .stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero .stat{text-align:center}
+.hero .stat-num{font-size:2rem;font-weight:700;color:var(--gold);display:block}
+.hero .stat-label{font-size:0.85rem;color:var(--text-dim)}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;animation:bounce 2s infinite;color:var(--gold-dim);font-size:0.85rem;text-align:center}
+.scroll-hint span{display:block;font-size:1.5rem;margin-top:0.3rem}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
+.cta-btn{display:inline-block;padding:0.9rem 2.5rem;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--bg);font-weight:700;text-decoration:none;border-radius:4px;font-size:1rem;transition:all 0.3s;letter-spacing:0.03em}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(200,164,92,0.3)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0.8rem 2rem;transition:all 0.3s;display:flex;align-items:center;justify-content:space-between}
+nav.scrolled{background:rgba(10,10,15,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--font-serif);color:var(--gold);font-size:1.2rem;text-decoration:none;font-weight:700}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:0.9rem;transition:color 0.3s}
+.nav-links a:hover{color:var(--gold)}
+.menu-btn{display:none;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer}
+
+/* TIMELINE */
+.timeline-section{padding:5rem 2rem;background:var(--bg)}
+.section-title{font-family:var(--font-serif);font-size:clamp(1.8rem,4vw,2.8rem);color:var(--gold-light);text-align:center;margin-bottom:0.5rem}
+.section-subtitle{text-align:center;color:var(--text-dim);margin-bottom:3rem;font-size:1rem}
+.timeline{max-width:1100px;margin:0 auto;position:relative}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--gold-dim),var(--gold),var(--gold-dim),transparent);transform:translateX(-50%)}
+.tl-item{display:flex;margin-bottom:3rem;position:relative;opacity:0;transform:translateY(30px);transition:all 0.6s ease}
+.tl-item.visible{opacity:1;transform:translateY(0)}
+.tl-item:nth-child(odd){flex-direction:row-reverse}
+.tl-content{width:45%;padding:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.3s;position:relative}
+.tl-content:hover{border-color:var(--gold-dim);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+.tl-content::after{content:'';position:absolute;top:1.5rem;width:12px;height:12px;background:var(--gold);border-radius:50%;z-index:2}
+.tl-item:nth-child(odd) .tl-content::after{left:-6px;left:calc(-6px - (10% / 2) - 1rem)}
+.tl-item:nth-child(even) .tl-content::after{right:-6px;right:calc(-6px - (10% / 2) - 1rem)}
+.tl-item:nth-child(odd) .tl-content{margin-right:5%}
+.tl-item:nth-child(even) .tl-content{margin-left:5%}
+.tl-date{display:inline-block;background:var(--gold-dim);color:var(--bg);padding:0.2rem 0.8rem;border-radius:3px;font-size:0.8rem;font-weight:700;margin-bottom:0.5rem}
+.tl-title{font-family:var(--font-serif);font-size:1.2rem;color:var(--gold-light);margin-bottom:0.4rem}
+.tl-desc{font-size:0.9rem;color:var(--text-dim);line-height:1.6}
+.tl-maps{font-size:0.8rem;color:var(--gold-dim);margin-top:0.5rem}
+.tl-thumb{width:100%;height:140px;object-fit:cover;border-radius:4px;margin-top:0.8rem;opacity:0.85;transition:opacity 0.3s}
+.tl-content:hover .tl-thumb{opacity:1}
+.tl-dot{position:absolute;left:50%;top:1.5rem;width:16px;height:16px;background:var(--bg);border:3px solid var(--gold);border-radius:50%;transform:translateX(-50%);z-index:3;transition:all 0.3s}
+.tl-item:hover .tl-dot{background:var(--gold);box-shadow:0 0 15px rgba(200,164,92,0.5)}
+
+/* PERIOD DETAIL MODAL / SECTIONS */
+.periods-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem;padding:2rem}
+.period-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:all 0.3s;cursor:pointer}
+.period-card:hover{border-color:var(--gold-dim);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.period-card img{width:100%;height:200px;object-fit:cover;transition:transform 0.5s}
+.period-card:hover img{transform:scale(1.05)}
+.period-card-body{padding:1.2rem}
+.period-card-body h3{font-family:var(--font-serif);color:var(--gold-light);margin-bottom:0.4rem;font-size:1.1rem}
+.period-card-body .date{color:var(--gold-dim);font-size:0.85rem;margin-bottom:0.5rem}
+.period-card-body p{color:var(--text-dim);font-size:0.9rem;line-height:1.6}
+
+/* DETAIL PAGE OVERLAY */
+.detail-overlay{position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;display:none;opacity:0;transition:opacity 0.4s}
+.detail-overlay.active{display:block;opacity:1}
+.detail-close{position:fixed;top:1.5rem;right:2rem;z-index:210;background:var(--bg3);border:1px solid var(--border);color:var(--gold);width:44px;height:44px;border-radius:50%;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+.detail-close:hover{background:var(--gold);color:var(--bg)}
+.detail-header{position:relative;height:40vh;min-height:300px;display:flex;align-items:flex-end;padding:3rem;overflow:hidden}
+.detail-header img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.4) sepia(0.2)}
+.detail-header-content{position:relative;z-index:1;max-width:800px}
+.detail-header h1{font-family:var(--font-serif);font-size:clamp(1.8rem,4vw,3rem);color:var(--gold-light);margin-bottom:0.3rem}
+.detail-header .period-range{color:var(--text);font-size:1.1rem}
+.detail-body{max-width:900px;margin:0 auto;padding:3rem 2rem}
+.detail-body h2{font-family:var(--font-serif);color:var(--gold);font-size:1.5rem;margin:2.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border)}
+.detail-body p{margin-bottom:1.2rem;line-height:1.9;color:var(--text)}
+.detail-body .highlight{background:var(--bg3);border-left:3px solid var(--gold);padding:1rem 1.5rem;margin:1.5rem 0;border-radius:0 4px 4px 0}
+.detail-body .highlight strong{color:var(--gold-light)}
+.detail-body ul{padding-left:1.5rem;margin-bottom:1.2rem}
+.detail-body li{margin-bottom:0.5rem;color:var(--text)}
+.detail-body li::marker{color:var(--gold-dim)}
+
+/* MAP GALLERY */
+.map-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin:2rem 0}
+.map-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:all 0.3s}
+.map-card:hover{border-color:var(--gold-dim);box-shadow:0 8px 25px rgba(0,0,0,0.4)}
+.map-card img{width:100%;height:180px;object-fit:cover;transition:transform 0.4s}
+.map-card:hover img{transform:scale(1.05)}
+.map-card-info{padding:0.8rem}
+.map-card-info h4{color:var(--gold-light);font-size:0.95rem;margin-bottom:0.2rem}
+.map-card-info p{color:var(--text-dim);font-size:0.8rem}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.active{display:flex}
+.lightbox img{max-width:95vw;max-height:90vh;object-fit:contain;border-radius:4px}
+.lightbox-close{position:absolute;top:1rem;right:1.5rem;color:#fff;font-size:2rem;cursor:pointer;z-index:301}
+.lightbox-caption{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:var(--text);background:rgba(0,0,0,0.7);padding:0.5rem 1.5rem;border-radius:4px;font-size:0.9rem;max-width:90vw;text-align:center}
+
+/* SOURCES */
+.sources-section{padding:4rem 2rem;background:var(--bg2)}
+.sources-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+.source-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:1.2rem;transition:all 0.3s}
+.source-card:hover{border-color:var(--gold-dim)}
+.source-card h4{color:var(--gold-light);font-size:0.95rem;margin-bottom:0.3rem}
+.source-card p{color:var(--text-dim);font-size:0.85rem;margin-bottom:0.5rem}
+.source-card a{color:var(--gold);font-size:0.85rem;text-decoration:none;word-break:break-all}
+.source-card a:hover{text-decoration:underline}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text-dim);font-size:0.85rem}
+footer a{color:var(--gold-dim);text-decoration:none}
+
+/* GENERAL GALLERY SECTION */
+.gallery-section{padding:5rem 2rem;background:var(--bg2)}
+.gallery-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.gallery-item{position:relative;overflow:hidden;border-radius:6px;cursor:pointer;aspect-ratio:4/3;border:1px solid var(--border);transition:all 0.3s}
+.gallery-item:hover{border-color:var(--gold-dim);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-item .caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.85));padding:1rem;color:#fff;font-size:0.9rem}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .timeline::before{left:1rem}
+  .tl-item,.tl-item:nth-child(odd){flex-direction:row}
+  .tl-item:nth-child(odd) .tl-content,.tl-item:nth-child(even) .tl-content{width:calc(100% - 3rem);margin-left:3rem;margin-right:0}
+  .tl-dot{left:1rem}
+  .tl-content::after,.tl-item:nth-child(odd) .tl-content::after,.tl-item:nth-child(even) .tl-content::after{left:-2rem !important;right:auto !important}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,15,0.98);justify-content:center;align-items:center;gap:2rem;z-index:99}
+  .nav-links.open a{font-size:1.3rem}
+  .menu-btn{display:block}
+  .hero .stats{gap:1rem}
+  .periods-grid{grid-template-columns:1fr}
+  .detail-header{height:30vh;min-height:220px}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-dim)}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-dim)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo" onclick="closeDetail();return false">☾ Kayı Atlası</a>
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="Menü">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="#timeline" onclick="closeDetail()">Zaman Çizelgesi</a>
+    <a href="#donemler" onclick="closeDetail()">Dönemler</a>
+    <a href="#galeri" onclick="closeDetail()">Harita Galerisi</a>
+    <a href="#kaynaklar" onclick="closeDetail()">Kaynaklar</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>Kayı Atlası</h1>
+    <p class="subtitle">Osmanlı Kuruluş Dönemi Tarih Haritaları</p>
+    <p class="tagline">Kayı boyunun Söğüt'e yerleşmesinden Çelebi Mehmed'in devleti yeniden birleştirmesine kadar geçen yüz yılı, 55'ten fazla tarihi harita ve detaylı anlatımlarla keşfedin.</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num">55+</span><span class="stat-label">Tarihi Harita</span></div>
+      <div class="stat"><span class="stat-num">12</span><span class="stat-label">Dönem</span></div>
+      <div class="stat"><span class="stat-num">~150</span><span class="stat-label">Yıllık Süreç</span></div>
+      <div class="stat"><span class="stat-num">7+</span><span class="stat-label">Kaynak Arşiv</span></div>
+    </div>
+    <a href="#timeline" class="cta-btn">Keşfetmeye Başla ↓</a>
+  </div>
+  <div class="scroll-hint">Aşağı Kaydır<span>↓</span></div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="timeline">
+  <h2 class="section-title">Zaman Çizelgesi</h2>
+  <p class="section-subtitle">Osmanlı'nın kuruluşundan Fetret Devri'nin sonuna — 1230'lar ~ 1421</p>
+  <div class="timeline" id="timelineContainer"></div>
+</section>
+
+<!-- DÖNEMLER -->
+<section class="gallery-section" id="donemler">
+  <h2 class="section-title">Dönemler</h2>
+  <p class="section-subtitle">Her dönemi detaylı haritalar ve anlatımlarla inceleyin</p>
+  <div class="periods-grid" id="periodsGrid"></div>
+</section>
+
+<!-- GENEL GALERİ -->
+<section class="timeline-section" id="galeri">
+  <h2 class="section-title">Genel Harita Galerisi</h2>
+  <p class="section-subtitle">Osmanlı İmparatorluğu genelini kapsayan referans haritaları</p>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<!-- KAYNAKLAR -->
+<section class="sources-section" id="kaynaklar">
+  <h2 class="section-title">Kaynaklar ve Referanslar</h2>
+  <p class="section-subtitle">Haritaların alındığı akademik ve kamusal arşivler</p>
+  <div class="sources-grid" id="sourcesGrid"></div>
+</section>
+
+<!-- DETAIL OVERLAY -->
+<div class="detail-overlay" id="detailOverlay">
+  <button class="detail-close" onclick="closeDetail()">✕</button>
+  <div id="detailContent"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Kayı Atlası — Osmanlı Kuruluş Dönemi Tarih Haritaları</p>
+  <p style="margin-top:0.5rem">Tüm haritalar <a href="https://commons.wikimedia.org/" target="_blank">Wikimedia Commons</a> ve <a href="https://maps.lib.utexas.edu/" target="_blank">Perry-Castañeda Library</a> gibi kamuya açık kaynaklardan alınmıştır.</p>
+</footer>
+
+<script>
+// ===== DATA =====
+const periods = [
+  {
+    id: "m01",
+    num: "01",
+    title: "Kayı Göç Rivayetleri ve Söğüt'e Yerleşme",
+    shortTitle: "Göç ve Söğüt",
+    date: "13. yy ilk yarısı",
+    dateRange: "~1230 – ~1280",
+    region: "Horasan – Azerbaycan – Doğu Anadolu – İç Anadolu",
+    thumb: "haritalar/M01_Goc_Rivayetleri_Sogut/Anadolu_Beylikleri_1300.png",
+    maps: [
+      {src:"haritalar/M01_Goc_Rivayetleri_Sogut/Anadolu_Beylikleri_1300.png", title:"Anadolu Beylikleri 1300", desc:"1300 yılında Anadolu'daki Türk beyliklerinin genel dağılımı"},
+      {src:"haritalar/M01_Goc_Rivayetleri_Sogut/Anadolu_Beylikleri_1300.svg", title:"Anadolu Beylikleri 1300 (Vektör)", desc:"SVG vektör formatında beylikler haritası"},
+      {src:"haritalar/M01_Goc_Rivayetleri_Sogut/Selcuklu_Imparatorlugu_Harita.png", title:"Selçuklu İmparatorluğu", desc:"Büyük Selçuklu İmparatorluğu'nun en geniş sınırları"},
+      {src:"haritalar/M01_Goc_Rivayetleri_Sogut/Bati_Asya_Mogollar_1330.jpg", title:"Batı Asya — Moğol Hâkimiyeti 1330", desc:"Moğol istilası sonrası Batı Asya'nın siyasi görünümü"},
+      {src:"haritalar/M01_Goc_Rivayetleri_Sogut/Mogol_Imparatorlugu_Goc_Donemi.gif", title:"Moğol İmparatorluğu Animasyon", desc:"Moğol yayılması ve göç hareketleri animasyonu"}
+    ],
+    summary: "Kayı boyu, Moğol istilası önünden Orta Asya'dan batıya göç eden Oğuz Türkmen boylarından biridir. Rivayete göre 400 çadırlık bir aşiret olan Kayılar, Anadolu Selçuklu Sultanı I. Alâeddin Keykubad tarafından Bizans uç bölgesindeki Söğüt ve Domaniç yaylakları yurt olarak verilmiştir.",
+    content: `
+      <h2>Tarihî Arka Plan</h2>
+      <p>13. yüzyılın ilk yarısında Orta Asya, Moğol fırtınasının etkisi altındadır. Cengiz Han'ın torunları Hârizmşahlar Devleti'ni yıkmış, İran ve Irak'ı alt üst etmiştir. Bu büyük kargaşa, Türkmen boylarını batıya doğru göçe zorlamıştır. Kayı boyu da bu göç dalgasının parçası olarak Anadolu'ya ulaşmıştır.</p>
+      <p>Anadolu Selçuklu Devleti, 1243 Kösedağ Muharebesi'ndeki yenilginin ardından Moğol İlhanlı Devleti'ne bağımlı hâle gelmiştir. Merkezi otorite zayıfladıkça, uç bölgelerdeki Türkmen beylikleri güçlenmeye başlamıştır.</p>
+
+      <div class="highlight">
+        <strong>Ertuğrul Gazi:</strong> Kayı boyunun bilinen ilk reisi Ertuğrul Gazi, Söğüt merkezli uç beyliğinde hem Bizans sınırına karşı gazâ faaliyetleri yürütmüş, hem de aşiretini yerleşik düzene geçirmeye çalışmıştır. Domaniç yaylaları ile Söğüt kışlağı arasındaki konargöçer yaşam, bu dönemin temel karakteristiğidir.
+      </div>
+
+      <h2>Coğrafi Bağlam</h2>
+      <p>Söğüt, kuzeybatı Anadolu'da Sakarya Nehri havzasında, Bizans İmparatorluğu ile Selçuklu toprakları arasındaki tampon bölgede yer almaktadır. Bu stratejik konum, küçük bir uç beyliğinin büyük bir devlete dönüşmesini mümkün kılan en önemli coğrafi etkendir.</p>
+      <p>Söğüt'ün batısında Bizans'ın Bitinya bölgesi, güneyinde İnegöl ve Bilecik gibi Rum kaleleri, doğusunda ise diğer Türkmen beylikleri bulunmaktadır. Bu çok yönlü dinamik, Kayıların hem gazâ ile hem de diplomasi ile büyümesine zemin hazırlamıştır.</p>
+
+      <h2>Anadolu Beylikleri</h2>
+      <p>1300 yılı civarında Anadolu'da onlarca Türkmen beyliği mevcuttur. Bunların başlıcaları:</p>
+      <ul>
+        <li><strong>Karamanoğulları</strong> — İç Anadolu'nun en güçlü beyliği, Konya merkezli</li>
+        <li><strong>Germiyanoğulları</strong> — Kütahya ve çevresinde hâkim</li>
+        <li><strong>Candaroğulları</strong> — Kastamonu ve Sinop bölgesinde</li>
+        <li><strong>Aydınoğulları</strong> — Ege kıyısında, denizcilikle ün kazanmış</li>
+        <li><strong>Saruhanoğulları</strong> — Manisa merkezli</li>
+        <li><strong>Menteşeoğulları</strong> — Muğla ve güneybatı Anadolu</li>
+        <li><strong>Osmanoğulları</strong> — Söğüt merkezli, henüz küçük ama stratejik konumda</li>
+      </ul>
+
+      <h2>Kayı Boyu Damgası ve Geleneği</h2>
+      <p>Kayı, Oğuz Kağan destanına göre Bozok kolunun ilk boyudur. Kayı adı, Dîvânü Lügâti't-Türk'te "kuvvet ve kudret sahibi" anlamına gelmektedir. Kayı boyunun damgası (IYI şeklinde iki ok ve bir yay) Osmanlı devlet sembollerinde yüzyıllar boyunca kullanılmıştır.</p>
+    `
+  },
+  {
+    id: "m02",
+    num: "02",
+    title: "Osman Gazi Dönemi ve İlk Fetihler",
+    shortTitle: "Osman Gazi",
+    date: "1280'ler – 1326",
+    dateRange: "~1281 – 1326",
+    region: "Bilecik – İnegöl – Eskişehir – Yenişehir – İznik hattı",
+    thumb: "haritalar/M02_Osman_Gazi_Ilk_Fetihler/Guneydogu_Avrupa_1340.jpg",
+    maps: [
+      {src:"haritalar/M02_Osman_Gazi_Ilk_Fetihler/PCL_Bizans_1265.jpg", title:"Bizans İmparatorluğu 1265", desc:"Osman Gazi öncesi Bizans'ın Anadolu'daki toprakları"},
+      {src:"haritalar/M02_Osman_Gazi_Ilk_Fetihler/Guneydogu_Avrupa_1340.jpg", title:"Güneydoğu Avrupa 1340", desc:"Osmanlı beyliğinin kuruluş döneminde bölge haritası"},
+      {src:"haritalar/M02_Osman_Gazi_Ilk_Fetihler/Balkanlar_1340.png", title:"Balkanlar 1340", desc:"14. yüzyıl ortasında Balkan Yarımadası"},
+      {src:"haritalar/M02_Osman_Gazi_Ilk_Fetihler/Dogu_Avrupa_1340.png", title:"Doğu Avrupa 1340", desc:"Yüksek çözünürlüklü Doğu Avrupa haritası"}
+    ],
+    summary: "Osman Gazi, babasından devraldığı küçük uç beyliğini sistematik fetihlerle genişleterek bağımsız bir devlet hâline getirmiştir. 1299 yılı geleneksel olarak Osmanlı Devleti'nin kuruluş tarihi kabul edilir.",
+    content: `
+      <h2>Osman Gazi'nin Yükselişi</h2>
+      <p>Ertuğrul Gazi'nin vefatının ardından beyliğin başına geçen Osman Gazi (tahminen 1258–1326), babasının uyguladığı tedbirli genişleme politikasını daha kararlı bir fetih stratejisine dönüştürmüştür. Osman Gazi'nin başarısının temelinde Bizans tekfurlarıyla kurduğu değişken ilişkiler, diğer Türkmen beyleriyle ittifaklar ve uç gazilerini etrafında toplama becerisi yatmaktadır.</p>
+
+      <div class="highlight">
+        <strong>Koyunhisar Muharebesi (1302):</strong> Osmanlıların Bizans'a karşı kazandığı ilk büyük zafer Bapheus (Koyunhisar) Muharebesi'dir. Bu zafer, Osman Gazi'nin adını Bizans kroniklerinde duyurmuş ve çevredeki Türkmen gruplarının onun liderliği altında toplanmasını hızlandırmıştır.
+      </div>
+
+      <h2>Fetih Stratejisi</h2>
+      <p>Osman Gazi'nin fetih yöntemi, büyük şehirleri doğrudan kuşatmak yerine çevrelerindeki kaleleri ve geçitleri ele geçirerek onları yalıtmaktı. Bu strateji özellikle İznik ve Bursa üzerinde başarıyla uygulanmıştır:</p>
+      <ul>
+        <li><strong>Karacahisar</strong> (1288) — İlk önemli kale fethi</li>
+        <li><strong>Bilecik</strong> (1299) — Stratejik geçit kontrolü</li>
+        <li><strong>Yenişehir</strong> (1301) — Osmanlı'nın ilk başkenti olarak kabul edilir</li>
+        <li><strong>İnegöl</strong> (1299) — Güneybatı yönünde genişleme</li>
+        <li><strong>Bursa kuşatması</strong> başlatılmış, fethini göremeden vefat etmiştir</li>
+      </ul>
+
+      <h2>Devlet Teşkilatının Temelleri</h2>
+      <p>Osman Gazi döneminde beylik, bir aşiret yapısından devlet organizasyonuna geçiş sürecine girmiştir. İlk sikke basımı, kadı atamaları ve pazar vergileri gibi uygulamalar bu dönemin kurumsal adımlarıdır. Osmanlı tarih yazımında "Osman Gazi'nin Rüyası" olarak bilinen menkıbe, hanedanın meşruiyet söyleminin temel taşıdır.</p>
+
+      <h2>Coğrafi Analiz</h2>
+      <p>Osman Gazi'nin faaliyet alanı, Marmara Denizi'nin güneydoğusundaki bölgeyle sınırlıdır. Sakarya Nehri doğu sınırını, Bizans'ın İznik ve Bursa kaleleri batı sınırını oluşturmuştur. Bu dar coğrafyada kazanılan her kale, devletin stratejik derinliğini artırmıştır.</p>
+    `
+  },
+  {
+    id: "m03",
+    num: "03",
+    title: "Orhan Gazi ve Marmara Çemberi",
+    shortTitle: "Orhan Gazi",
+    date: "1326 – 1362",
+    dateRange: "1326 – 1362",
+    region: "İznik – İzmit – Bursa – Gemlik – Sakarya hattı",
+    thumb: "haritalar/M03_Orhan_Gazi_Marmara/Akdeniz_1350.png",
+    maps: [
+      {src:"haritalar/M03_Orhan_Gazi_Marmara/Akdeniz_1350.png", title:"Doğu Akdeniz 1350", desc:"Orhan Gazi döneminde Doğu Akdeniz'in siyasi haritası"}
+    ],
+    summary: "Orhan Gazi, Bursa'yı fethederek başkent yapmış, İznik ve İzmit'i alarak Marmara Denizi'nin güney kıyılarını tamamen kontrol altına almıştır. Bu dönemde Osmanlı, bir beylikten devlete dönüşmüştür.",
+    content: `
+      <h2>Bursa'nın Fethi ve Başkent Oluşu</h2>
+      <p>Orhan Gazi (1281–1362), babasının başlattığı Bursa kuşatmasını 1326 yılında zaferle sonuçlandırmıştır. Bursa, Osmanlı Devleti'nin ilk gerçek başkenti olmuş, burada inşa edilen camiler, medreseler ve imarethaneler devletin kurumsal yapısını somutlaştırmıştır.</p>
+
+      <div class="highlight">
+        <strong>Bursa'nın Önemi:</strong> Bursa yalnızca siyasi bir merkez değil, aynı zamanda ipek ticaretinin kavşak noktasıydı. Şehrin fethi Osmanlılara önemli bir ekonomik güç kazandırmıştır. Koza Han, Orhan Gazi'nin inşa ettirdiği ilk ticaret yapılarındandır.
+      </div>
+
+      <h2>Marmara Stratejisi</h2>
+      <p>Orhan Gazi'nin stratejik hedefi, Marmara Denizi'nin güney kıyı şeridini tamamen kontrol altına almaktı:</p>
+      <ul>
+        <li><strong>İznik</strong> (1331) — Birinci İznik Konsili'ne ev sahipliği yapmış tarihi şehir</li>
+        <li><strong>İzmit (Nikomedia)</strong> (1337) — Doğu Marmara'nın anahtarı</li>
+        <li><strong>Gemlik</strong> — Deniz çıkışı sağlayan liman şehri</li>
+        <li><strong>Üsküdar</strong> yakınlarına kadar ilerleme — İstanbul karşısına ulaşım</li>
+      </ul>
+
+      <h2>Devlet Teşkilatında Önemli Adımlar</h2>
+      <p>Orhan Gazi döneminde devlet yapısında köklü değişiklikler yapılmıştır. İlk düzenli Osmanlı ordusu "yaya ve müsellem" sistemiyle kurulmuştur. Divan teşkilatı düzenlenmiş, ilk Osmanlı gümüş sikkesi (akçe) basılmıştır. Medrese sistemi Bursa İznik'te başlamış, bu kurumlar devletin ilmî altyapısını oluşturmuştur.</p>
+
+      <h2>Bizans ile İlişkiler</h2>
+      <p>Orhan Gazi, Bizans İmparatoru VI. Ioannes Kantakuzenos ile ittifak kurmuş ve onun kızı Theodora ile evlenmiştir. Bu ittifak, Osmanlıların Rumeli'ye geçişinin diplomatik zeminini hazırlamıştır. Bizans iç savaşlarında Osmanlı askeri desteği, aynı zamanda Osmanlıların Trakya coğrafyasını tanımasını sağlamıştır.</p>
+    `
+  },
+  {
+    id: "m04",
+    num: "04",
+    title: "Rumeli'ye Geçiş ve Gelibolu Köprüsü",
+    shortTitle: "Rumeli'ye Geçiş",
+    date: "1352 – 1361",
+    dateRange: "1352 – 1361",
+    region: "Gelibolu – Bolayır – Çimpe – Edirne",
+    thumb: "haritalar/M04_Rumeli_Gelibolu/Bizans_Osmanli_1355.jpg",
+    maps: [
+      {src:"haritalar/M04_Rumeli_Gelibolu/PCL_Bizans_Osmanli_1355.jpg", title:"Bizans ve Osmanlı 1355", desc:"Osmanlı Rumeli'ye geçiş döneminde Bizans toprakları (Shepherd Atlası)"},
+      {src:"haritalar/M04_Rumeli_Gelibolu/Bizans_Osmanli_1355.jpg", title:"Bizans–Osmanlı Sınırları 1355", desc:"Rumeli'ye geçiş öncesi iki devletin sınır durumu"},
+      {src:"haritalar/M04_Rumeli_Gelibolu/Bizans_1355.jpg", title:"Bizans İmparatorluğu 1355", desc:"Küçülen Bizans toprakları"}
+    ],
+    summary: "Süleyman Paşa komutasındaki Osmanlı kuvvetleri, 1352'de Çimpe Kalesi'ni alarak Avrupa'ya ilk kalıcı yerleşmeyi gerçekleştirmiştir. 1354 Gelibolu depremi, Osmanlıların yarımadayı tamamen ele geçirmesini kolaylaştırmıştır.",
+    content: `
+      <h2>Avrupa'ya İlk Adım</h2>
+      <p>Osmanlıların Avrupa kıtasına geçişi, dünya tarihinin dönüm noktalarından biridir. Orhan Gazi'nin oğlu Süleyman Paşa, 1352 yılında Bizans iç savaşında müttefik olarak Gelibolu Yarımadası'na asker çıkarmıştır. Çimpe Kalesi, ilk kalıcı Osmanlı mevzii olmuştur.</p>
+
+      <div class="highlight">
+        <strong>1354 Gelibolu Depremi:</strong> Büyük bir deprem Gelibolu ve çevresindeki Bizans kalelerini yıkmıştır. Süleyman Paşa bu fırsatı değerlendirerek yarımadanın tamamını kontrol altına almıştır. Bu olay, Osmanlı'nın Balkan fetihlerinin fiili başlangıcıdır.
+      </div>
+
+      <h2>Stratejik Önemi</h2>
+      <p>Gelibolu'nun ele geçirilmesi birçok açıdan kritik öneme sahiptir:</p>
+      <ul>
+        <li>Çanakkale Boğazı'nın Avrupa yakası kontrol altına alınmıştır</li>
+        <li>Anadolu'dan Rumeli'ye kesintisiz asker ve göçmen akışı başlamıştır</li>
+        <li>Bizans'ın Trakya ile Balkan toprakları arasındaki bağlantı tehdit altına girmiştir</li>
+        <li>Osmanlı donanmacılığının temelleri atılmıştır</li>
+      </ul>
+
+      <h2>İskân Politikası</h2>
+      <p>Osmanlılar, fethettikleri Rumeli topraklarına Anadolu'dan Türkmen nüfus yerleştirmiştir. "Sürgün" adı verilen bu zorunlu iskân politikası, fethedilen bölgelerin demografik yapısını değiştirmiş ve Osmanlı hâkimiyetini kalıcı kılmıştır. Bu uygulama, sonraki yüzyıllarda Balkan fetihlerinin temel stratejisi olacaktır.</p>
+
+      <h2>Edirne'nin Fethi Hazırlıkları</h2>
+      <p>Gelibolu'dan sonra Osmanlılar Trakya içlerine ilerlemeye başlamıştır. Süleyman Paşa'nın 1357'deki vefatının ardından bu görevi Şehzade Murad (I. Murad) üstlenmiştir. 1361 yılında Edirne (Adrianople) fethedilmiş ve kısa sürede Osmanlı'nın Avrupa'daki başkenti hâline gelmiştir.</p>
+    `
+  },
+  {
+    id: "m05",
+    num: "05",
+    title: "I. Murad ve Trakya-Balkan Genişlemesi",
+    shortTitle: "I. Murad",
+    date: "1362 – 1389",
+    dateRange: "1362 – 1389",
+    region: "Edirne – Filibe – Sofya – Makedonya – Kosova",
+    thumb: "haritalar/M05_Murad1_Trakya_Balkan/Osmanli_Balkanlar_Anadolu_1598.jpg",
+    maps: [
+      {src:"haritalar/M05_Murad1_Trakya_Balkan/Akdeniz_1389.png", title:"Doğu Akdeniz 1389", desc:"I. Murad döneminin sonundaki siyasi durum"},
+      {src:"haritalar/M05_Murad1_Trakya_Balkan/Bizans_1389.png", title:"Bizans 1389", desc:"Kosova Muharebesi yılında Bizans toprakları"},
+      {src:"haritalar/M05_Murad1_Trakya_Balkan/Osmanli_Balkanlar_Anadolu_1598.jpg", title:"Osmanlı — Balkanlar ve Anadolu", desc:"Osmanlı'nın Balkan ve Anadolu toprakları (orijinal dönem haritası)"},
+      {src:"haritalar/M05_Murad1_Trakya_Balkan/Osmanli_Buyumesi_1481-1683.jpg", title:"Osmanlı Büyüme Haritası", desc:"Osmanlı'nın dönemler arası büyüme süreci"},
+      {src:"haritalar/M05_Murad1_Trakya_Balkan/PCL_Avrupa_1560.jpg", title:"Avrupa 1560", desc:"Osmanlı genişlemesi sonrası Avrupa haritası (PCL)"},
+      {src:"haritalar/M05_Murad1_Trakya_Balkan/PCL_Makedonya_Antik.jpg", title:"Makedonya ve Trakya (Tarihi)", desc:"Makedonya, Trakya ve İlirya tarihi haritası"}
+    ],
+    summary: "I. Murad (Hüdavendigâr), Osmanlı Devleti'ni bir Balkan gücüne dönüştürmüştür. Edirne'yi başkent yapmış, Trakya, Makedonya ve Bulgaristan'ı fethetmiş, 1389 Kosova Muharebesi'nde Sırp-Haçlı ittifakını yenerek şehit düşmüştür.",
+    content: `
+      <h2>Hüdavendigâr — Hükümdarların Efendisi</h2>
+      <p>I. Murad (1326–1389), Osmanlı tarihinin en önemli dönüştürücü padişahıdır. Babası Orhan Gazi'den devraldığı beyliği, iki kıtaya yayılan güçlü bir devlete çevirmiştir. "Hüdavendigâr" (Hükümdarların Efendisi) lakabı, vassal hükümdarlar üzerindeki otoritesini yansıtmaktadır.</p>
+
+      <div class="highlight">
+        <strong>Edirne Başkent Oluyor:</strong> Edirne'nin 1361-1362'de fethiyle birlikte Osmanlılar, Avrupa'da kalıcı bir stratejik merkez kazanmıştır. Edirne, Meriç ve Tunca nehirlerinin birleştiği noktadaki konumuyla mükemmel bir askeri üs ve ticaret merkeziydi. 1365'ten itibaren fiili başkent işlevi görmüş, İstanbul'un fethine kadar bu statüsünü korumuştur.
+      </div>
+
+      <h2>Balkan Fetihleri</h2>
+      <ul>
+        <li><strong>1362–63:</strong> Filibe (Plovdiv) ve Eski Zağra (Stara Zagora) — Trakya'nın tamamı</li>
+        <li><strong>1371:</strong> Çirmen Muharebesi — Sırp despotluklarına karşı ilk büyük zafer</li>
+        <li><strong>1382:</strong> Sofya — Balkanların kilit kenti</li>
+        <li><strong>1383:</strong> Serez — Makedonya'nın fethi</li>
+        <li><strong>1385:</strong> Niş — Sırbistan'ın güneyi</li>
+        <li><strong>1389:</strong> I. Kosova Muharebesi — Sırp-Haçlı koalisyonunun yenilgisi</li>
+      </ul>
+
+      <h2>Yeniçeri Ocağı ve Devşirme</h2>
+      <p>I. Murad döneminin en önemli kurumsal yeniliği Yeniçeri Ocağı'nın kuruluşudur. Hristiyan ailelerden devşirilen gençlerin İslam'a geçirilerek askeri eğitim almasıyla oluşturulan bu birlik, padişaha doğrudan bağlı profesyonel bir ordu sağlamıştır. Yeniçeriler, Avrupa'nın ilk daimi ordularından biri olarak yüzyıllar boyunca Osmanlı askeri gücünün omurgasını oluşturacaktır.</p>
+
+      <h2>I. Kosova Muharebesi (1389)</h2>
+      <p>15 Haziran 1389'da Kosova Ovası'nda gerçekleşen bu muharebe, Balkan tarihinin en önemli olaylarından biridir. Sırp Prensi Lazar komutasındaki Sırp, Boşnak ve Arnavut kuvvetlerinden oluşan koalisyon, Osmanlı ordusuna yenilmiştir. Ancak I. Murad da savaş sırasında (veya hemen sonrasında) bir Sırp soylusu tarafından şehit edilmiştir.</p>
+
+      <div class="highlight">
+        <strong>Vasallık Sistemi:</strong> I. Murad, fethettiği bölgelerde doğrudan ilhak yerine vasallık sistemini tercih etmiştir. Sırp, Bulgar ve Bizans beyleri, Osmanlı'ya vergi ödeyerek ve savaş zamanı asker göndererek kendi iç yönetimlerini sürdürmüşlerdir. Bu esnek yönetim modeli, hızlı genişlemenin anahtarı olmuştur.
+      </div>
+    `
+  },
+  {
+    id: "m06",
+    num: "06",
+    title: "Yeniçeri ve Haçlı Cepheleri",
+    shortTitle: "Haçlı Cepheleri",
+    date: "1360'lar – 1396",
+    dateRange: "~1363 – 1396",
+    region: "Edirne – Kosova – Niğbolu – Tuna hattı",
+    thumb: "haritalar/M06_Yeniceri_Hacli_Cepheleri/Balkan_Osmanli_1699.jpg",
+    maps: [
+      {src:"haritalar/M06_Yeniceri_Hacli_Cepheleri/Balkan_Osmanli_1699.jpg", title:"Balkanlar ve Osmanlı", desc:"Osmanlı'nın Balkan topraklarını gösteren geniş kapsamlı harita"},
+      {src:"haritalar/M06_Yeniceri_Hacli_Cepheleri/PCL_Hacli_Seferleri_1905.jpg", title:"Haçlı Seferleri Haritası 1905", desc:"Haçlı seferlerinin genel güzergâhlarını gösteren tarihi harita"}
+    ],
+    summary: "Osmanlı'nın Balkan fetihleri Avrupa'da ciddi endişe yaratmış, Papalık öncülüğünde Haçlı seferleri düzenlenmiştir. Yeniçeri Ocağı bu dönemde profesyonel bir güç olarak ortaya çıkmıştır.",
+    content: `
+      <h2>Avrupa'nın Osmanlı Korkusu</h2>
+      <p>Osmanlı'nın Balkanlar'daki hızlı ilerleyişi, Avrupa'da büyük endişe yaratmıştır. Papalık, Macaristan, Fransa, Kutsal Roma İmparatorluğu ve çeşitli İtalyan devletleri, Osmanlı tehdidine karşı koalisyonlar oluşturmaya çalışmıştır.</p>
+
+      <h2>Sırpsındığı Muharebesi (1364)</h2>
+      <p>Osmanlılara karşı düzenlenen ilk Haçlı girişimi, Meriç Nehri kıyısında yapılan Sırpsındığı (Maritsa) Muharebesi'dir. Sırp, Macar ve Bosna kuvvetlerinden oluşan Haçlı ordusu, Hacı İlbey komutasındaki Osmanlı akıncıları tarafından baskınla bozguna uğratılmıştır.</p>
+
+      <div class="highlight">
+        <strong>Akıncı Teşkilatı:</strong> Osmanlı'nın Balkan fetihlerinde akıncılar kritik rol oynamıştır. Bu hafif süvari birlikleri, düşman topraklarına derin akınlar düzenleyerek keşif yapıyor, düşman kuvvetlerini yıpratıyor ve fetih öncesi psikolojik üstünlük sağlıyordu. Evrenos Bey, Mihaloğlu Ailesi gibi akıncı komutanları, Osmanlı Balkan fetihlerinin en bilinen isimleridir.
+      </div>
+
+      <h2>Yeniçeri Ocağı'nın Gelişimi</h2>
+      <p>I. Murad döneminde kurulan Yeniçeri Ocağı, bu dönemde tam teşekküllü bir askeri kurum hâline gelmiştir. Yeniçeriler:</p>
+      <ul>
+        <li>Katı disiplin altında yetiştirilen, barış zamanı da maaş alan daimi askerlerdi</li>
+        <li>Evlenmeleri ve ticaretle uğraşmaları yasaktı</li>
+        <li>Padişaha mutlak sadakat ile bağlıydılar</li>
+        <li>Avrupa'nın ilk düzenli piyade birliklerinden birini oluşturuyorlardı</li>
+      </ul>
+
+      <h2>Haçlı Karşıtı Savunma Stratejisi</h2>
+      <p>Osmanlılar, Haçlı saldırılarına karşı çok katmanlı bir savunma stratejisi geliştirmiştir. Tuna Nehri doğal bir savunma hattı olarak kullanılmış, nehir kıyısındaki kaleler güçlendirilmiş ve vassal devletlerin kuvvetleri tampon bölge olarak konumlandırılmıştır.</p>
+    `
+  },
+  {
+    id: "m07",
+    num: "07",
+    title: "Yıldırım Bayezid ve Anadolu Birliği",
+    shortTitle: "Yıldırım Bayezid",
+    date: "1389 – 1402",
+    dateRange: "1389 – 1402",
+    region: "Batı ve Orta Anadolu – Balkanlar",
+    thumb: "haritalar/M07_Yildirim_Bayezid_Anadolu/PCL_Osmanli_1481-1683.jpg",
+    maps: [
+      {src:"haritalar/M07_Yildirim_Bayezid_Anadolu/Anadolu_Haritasi_1444.png", title:"Anadolu Haritası 1444", desc:"15. yüzyıl ortasında Anadolu (yüksek çözünürlük)"},
+      {src:"haritalar/M07_Yildirim_Bayezid_Anadolu/Anadolu_Eyalet_1609.png", title:"Anadolu Eyaleti 1609", desc:"Osmanlı Anadolu eyalet yapısı"},
+      {src:"haritalar/M07_Yildirim_Bayezid_Anadolu/PCL_Osmanli_1481-1683.jpg", title:"Osmanlı 1481–1683 Genişleme", desc:"Osmanlı İmparatorluğu'nun en geniş sınırlara ulaştığı dönem"}
+    ],
+    summary: "Yıldırım Bayezid, Kosova zaferinin ardından tahta çıkmış, Anadolu beyliklerini ilhak ederek Osmanlı'yı iki kıtada hâkim güç hâline getirmiştir. Ancak 1402 Ankara Muharebesi'ndeki yenilgi, bu başarıları geçici kılmıştır.",
+    content: `
+      <h2>Yıldırım — En Hızlı Padişah</h2>
+      <p>I. Bayezid (1360–1403), harekât hızı nedeniyle "Yıldırım" lakabını almıştır. Kosova'dan Karaman'a, Tuna'dan Fırat'a kadar uzanan geniş bir coğrafyada aynı anda seferler yürütebilme kapasitesiyle tanınmıştır.</p>
+
+      <h2>Anadolu Beyliklerinin İlhakı</h2>
+      <p>Yıldırım Bayezid, Anadolu'daki Türkmen beyliklerini sistematik olarak Osmanlı topraklarına katmıştır:</p>
+      <ul>
+        <li><strong>Germiyan</strong> — Çeyiz yoluyla barışçıl ilhak</li>
+        <li><strong>Aydınoğulları</strong> — Askeri müdahale ile</li>
+        <li><strong>Saruhan</strong> — Diplomatik baskı</li>
+        <li><strong>Menteşe</strong> — Askeri operasyon</li>
+        <li><strong>Hamidoğulları</strong> — Satın alma yoluyla</li>
+        <li><strong>Karaman</strong> — En büyük rakip, birden fazla sefer sonucu</li>
+        <li><strong>Candaroğulları</strong> — Kuzeyde son bağımsız beylik</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>İmparatorluk Hayali:</strong> Yıldırım Bayezid, Abbasi Halifesi'nden "Sultanü'r-Rum" (Roma'nın Sultanı) unvanını almıştır. İstanbul'u kuşatmış ve Anadolu ile Balkanları tek çatı altında birleştirme hedefine en yaklaşan padişah olmuştur. Ancak Timur'un müdahalesi bu planları altüst etmiştir.
+      </div>
+
+      <h2>Balkan Cephesinde Devam</h2>
+      <p>Anadolu'daki fetihler sürerken Balkan cephesi de aktif kalmıştır. Selanik kuşatması, Mora akınları ve Macaristan sınırındaki çatışmalar devam etmiştir. 1393'te Tırnova düşmüş ve Bulgar Çarlığı fiilen sona ermiştir.</p>
+
+      <h2>İstanbul Kuşatmaları</h2>
+      <p>Yıldırım Bayezid, İstanbul'u en az iki kez kuşatmıştır. Anadolu Hisarı'nı (Güzelcehisar) inşa ettirerek Boğaz trafiğini kontrol altına almaya çalışmıştır. Ancak Timur tehdidi nedeniyle kuşatmalar yarım kalmıştır.</p>
+    `
+  },
+  {
+    id: "m08",
+    num: "08",
+    title: "İstanbul Kuşatmaları ve Boğaz Kontrolü",
+    shortTitle: "İstanbul Kuşatmaları",
+    date: "1391 – 1422",
+    dateRange: "1391 – 1422",
+    region: "İstanbul ve çevresi — Boğaziçi",
+    thumb: "haritalar/M08_Istanbul_Kusatmalari/PCL_Konstantinopolis_Shepherd.jpg",
+    maps: [
+      {src:"haritalar/M08_Istanbul_Kusatmalari/PCL_Konstantinopolis_1916.jpg", title:"Konstantinopolis 1916", desc:"Konstantinopolis şehir planı (1916 baskı)"},
+      {src:"haritalar/M08_Istanbul_Kusatmalari/PCL_Konstantinopolis_Shepherd.jpg", title:"Konstantinopolis — Shepherd Atlası", desc:"Shepherd Tarih Atlası'ndan Konstantinopolis planı"}
+    ],
+    summary: "Osmanlılar, kuruluş döneminden itibaren İstanbul'u hedeflemiştir. Yıldırım Bayezid'in kuşatmaları ve Anadolu Hisarı'nın inşası, 1453'teki nihai fethinin ön hazırlıkları niteliğindedir.",
+    content: `
+      <h2>Konstantinopolis — Ebedî Hedef</h2>
+      <p>İstanbul, Osmanlı kuruluş döneminden itibaren nihai hedef olarak görülmüştür. "Kızıl Elma" olarak adlandırılan bu hedef, hem stratejik hem de manevi bir anlam taşımaktadır. Hz. Peygamber sallallahu aleyhi ve sellem'in İstanbul'un fethi hakkındaki hadis-i şerifi, Osmanlı padişahlarının en büyük motivasyon kaynağı olmuştur.</p>
+
+      <h2>Kuşatmalar Kronolojisi</h2>
+      <ul>
+        <li><strong>1391–94:</strong> Yıldırım Bayezid'in ilk kuşatması — uzun süreli abluka</li>
+        <li><strong>1394–1402:</strong> Anadolu Hisarı inşası — Boğaz trafiğinin kontrolü</li>
+        <li><strong>1411:</strong> Musa Çelebi'nin kuşatması (Fetret Devri sırasında)</li>
+        <li><strong>1422:</strong> II. Murad'ın kuşatması — surlar bombardıman edilmiş fakat fethedilememiştir</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>Anadolu Hisarı (1394):</strong> Yıldırım Bayezid tarafından Boğaz'ın en dar noktasında inşa edilen bu kale, İstanbul'a denizden gelecek yardımı engellemek amacıyla yapılmıştır. Fatih Sultan Mehmed, 1452'de karşı kıyıya Rumeli Hisarı'nı ekleyerek boğaz kontrolünü tamamlayacaktır.
+      </div>
+
+      <h2>Konstantinopolis'in Savunması</h2>
+      <p>Konstantinopolis, üç tarafı denizle çevrili ve karadan Teodosyus Surları ile korunan, ortaçağın en müstahkem şehriydi. Bizans, şehri savunmak için Venedik ve Ceneviz deniz güçleriyle ittifak yapıyor, Haliç'i zincirle kapatıyor ve surlarını sürekli güçlendiriyordu.</p>
+
+      <h2>Stratejik Analiz</h2>
+      <p>Kuruluş dönemindeki başarısız kuşatmalar, Osmanlılara değerli dersler vermiştir: güçlü bir donanma olmadan şehrin alınamayacağı, surları aşmak için ağır topçuya ihtiyaç olduğu ve şehrin fethi için Anadolu ve Rumeli'nin tamamen kontrol altında olması gerektiği anlaşılmıştır. Bu dersler, 1453'teki nihai fethin stratejik planlamasına temel oluşturmuştur.</p>
+    `
+  },
+  {
+    id: "m09",
+    num: "09",
+    title: "Niğbolu Haçlı Seferi",
+    shortTitle: "Niğbolu",
+    date: "1396",
+    dateRange: "1396",
+    region: "Budapeşte – Tuna – Niğbolu",
+    thumb: "haritalar/M09_Nigbolu_Hacli_Seferi/Nigbolu_Muharebesi_1396.png",
+    maps: [
+      {src:"haritalar/M09_Nigbolu_Hacli_Seferi/Nigbolu_Muharebesi_1396.png", title:"Niğbolu Muharebesi 1396", desc:"Niğbolu Muharebesi'nin savaş planı ve birlik konumları"}
+    ],
+    summary: "1396 Niğbolu Muharebesi, Osmanlılara karşı düzenlenen en büyük Haçlı seferinin dramatik yenilgisiyle sonuçlanmıştır. Bu zafer, Osmanlı'nın Avrupa'daki konumunu pekiştirmiş ve Bayezid'in itibarını doruk noktasına taşımıştır.",
+    content: `
+      <h2>Son Büyük Haçlı Seferi</h2>
+      <p>Niğbolu Muharebesi (25 Eylül 1396), Orta Çağ'ın son büyük Haçlı seferi olarak kabul edilir. Fransa Kralı VI. Charles, Macaristan Kralı Sigismund, Papalık, Kutsal Roma İmparatorluğu, Venedik, Ceneviz, İngiltere, İskoçya, Burgundiya ve çeşitli Alman prensliklerinden oluşan geniş bir koalisyon, Osmanlı'yı Balkanlar'dan atmak amacıyla sefere çıkmıştır.</p>
+
+      <h2>Kuvvet Dengesi</h2>
+      <ul>
+        <li><strong>Haçlı Ordusu:</strong> Yaklaşık 15.000-20.000 kişi. Ağır zırhlı Fransız şövalyeleri, Macar piyadesi, Venedik donanması</li>
+        <li><strong>Osmanlı Ordusu:</strong> Yaklaşık 15.000-20.000 kişi. Yeniçeriler, sipahiler, akıncılar ve Sırp vassal kuvvetleri</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>Muharebede Dönüm Noktası:</strong> Fransız şövalyelerinin disiplinsiz saldırısı muharebenin kaderini belirlemiştir. Yıldırım Bayezid'in gizlediği yedek süvari kuvvetleri, Haçlı hattını arkadan çevirmiştir. Sırp Despot Stefan Lazareviç'in Osmanlı safındaki rolü de zaferde belirleyici olmuştur.
+      </div>
+
+      <h2>Sonuçları</h2>
+      <p>Niğbolu zaferi Avrupa'da şok etkisi yaratmıştır. Yıldırım Bayezid'in Avrupa'daki otoritesi tartışılmaz hâle gelmiştir. Bulgaristan tamamen Osmanlı kontrolüne girmiş, Tuna Nehri savunma hattı olarak sağlamlaşmıştır. Macaristan sınırında uzun süreli bir denge oluşmuştur.</p>
+
+      <h2>Esirler ve Fidye</h2>
+      <p>Muharebede çok sayıda Avrupalı soylu esir alınmıştır. Burgundiya Dükü'nün oğlu Jean de Nevers başta olmak üzere pek çok şövalye için yüksek fidyeler ödenmiştir. Bu fidye geliri Osmanlı hazinesine önemli bir kaynak sağlamıştır.</p>
+    `
+  },
+  {
+    id: "m10",
+    num: "10",
+    title: "Timur–Yıldırım Karşılaşması ve Ankara Savaşı",
+    shortTitle: "Ankara Savaşı",
+    date: "1400 – 1402",
+    dateRange: "1400 – 1402",
+    region: "Sivas – Erzincan – Ankara",
+    thumb: "haritalar/M10_Timur_Yildirim_Ankara/Ankara_Muharebesi_1402.jpg",
+    maps: [
+      {src:"haritalar/M10_Timur_Yildirim_Ankara/Ankara_Muharebesi_1402.jpg", title:"Ankara Muharebesi 1402", desc:"Timur'un Bayezid'i mağlup ettiği muharebeden bir minyatür"},
+      {src:"haritalar/M10_Timur_Yildirim_Ankara/Ankara_Eyalet_1861.png", title:"Ankara Eyaleti", desc:"Ankara ve çevresinin coğrafi referans haritası"}
+    ],
+    summary: "1402 Ankara Muharebesi, Osmanlı tarihinin en büyük felaketidir. Timur'un ordusu karşısında yenilen Yıldırım Bayezid esir düşmüş, Anadolu beylikleri yeniden bağımsızlığını ilan etmiş ve devlet parçalanma sürecine girmiştir.",
+    content: `
+      <h2>İki Cihan Fatihi Karşı Karşıya</h2>
+      <p>Timur (Aksak Timur, 1336–1405), Orta Asya'dan İran, Irak, Hindistan ve Suriye'ye kadar uzanan devasa bir imparatorluk kurmuştu. Anadolu beylerinin Osmanlı'dan kaçarak Timur'a sığınması ve iki hükümdar arasındaki sert diplomatik yazışmalar, çatışmayı kaçınılmaz kılmıştır.</p>
+
+      <h2>Savaşa Giden Süreç</h2>
+      <ul>
+        <li><strong>1400:</strong> Timur, Sivas'ı kuşatarak 4.000 kişilik Osmanlı garnizonunu kılıçtan geçirmiştir</li>
+        <li><strong>1401:</strong> Timur, Suriye ve Bağdat'ı tahrip ettikten sonra Anadolu'ya yönelmiştir</li>
+        <li><strong>1402:</strong> İki ordu Ankara yakınlarında (Çubuk Ovası) karşılaşmıştır</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>Ankara Muharebesi (28 Temmuz 1402):</strong> Tarihin en büyük meydan muharebelerinden biri olan bu savaşta her iki tarafta toplam 150.000'den fazla asker bulunduğu tahmin edilmektedir. Osmanlı ordusundaki Tatar ve eski beylik kuvvetlerinin savaş sırasında Timur tarafına geçmesi, yenilgiyi kaçınılmaz kılmıştır.
+      </div>
+
+      <h2>Felaket ve Sonuçları</h2>
+      <p>Yıldırım Bayezid, Osmanlı tarihinde savaşta esir düşen tek padişahtır. Timur'un "demir kafes" hikâyesi tartışmalı olmakla birlikte, Bayezid 1403'te esarette vefat etmiştir. Timur, Anadolu beyliklerini yeniden ihya ederek Osmanlı'nın Anadolu birliğini tamamen yıkmıştır.</p>
+
+      <h2>Yıkımın Boyutları</h2>
+      <p>Timur'un Anadolu seferi muazzam yıkıma yol açmıştır. Bursa ve İzmir başta olmak üzere pek çok şehir tahrip edilmiştir. İzmir'de yaşayan Hristiyan nüfusa bile merhamet gösterilmemiştir. Bu yıkım, Anadolu'nun ekonomik toparlanmasını onlarca yıl geciktirmiştir.</p>
+    `
+  },
+  {
+    id: "m11",
+    num: "11",
+    title: "Fetret Devri ve Çelebi Mehmed'in Toparlanışı",
+    shortTitle: "Fetret Devri",
+    date: "1402 – 1413",
+    dateRange: "1402 – 1413",
+    region: "Amasya – Tokat – Bursa – Edirne",
+    thumb: "haritalar/M11_Fetret_Devri_Celebi_Mehmed/Kastamonu_Eyalet_1861.png",
+    maps: [
+      {src:"haritalar/M11_Fetret_Devri_Celebi_Mehmed/Kastamonu_Eyalet_1861.png", title:"Kastamonu Eyaleti", desc:"Fetret Devri'nde Candaroğulları'nın faaliyet alanı"}
+    ],
+    summary: "Ankara yenilgisinin ardından Osmanlı Devleti, Yıldırım Bayezid'in oğulları arasında 11 yıl süren bir taht kavgası yaşamıştır. Çelebi Mehmed, tüm rakiplerini bertaraf ederek devleti yeniden birleştirmiştir.",
+    content: `
+      <h2>Fetret Devri — Saltanat Boşluğu</h2>
+      <p>1402–1413 yılları arasındaki 11 yıllık dönem, Osmanlı tarihinde "Fetret Devri" (Saltanat Boşluğu) olarak adlandırılır. Yıldırım Bayezid'in oğulları — Süleyman Çelebi, İsa Çelebi, Musa Çelebi ve Mehmed Çelebi — devletin farklı bölgelerinde hâkimiyet kurarak birbirleriyle savaşmışlardır.</p>
+
+      <h2>Şehzadeler ve Hâkimiyet Alanları</h2>
+      <ul>
+        <li><strong>Süleyman Çelebi</strong> — Rumeli (Edirne merkezli). Başlangıçta en güçlü aday</li>
+        <li><strong>İsa Çelebi</strong> — Bursa ve çevresi. İlk elenen şehzade</li>
+        <li><strong>Mehmed Çelebi</strong> — Amasya, Tokat, Sivas. Sabırlı ve stratejik</li>
+        <li><strong>Musa Çelebi</strong> — Sonradan Rumeli'de güç kazanmıştır</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>Çelebi Mehmed'in Stratejisi:</strong> Mehmed Çelebi, diğer kardeşlerinin aksine sabırlı bir strateji izlemiştir. Önce Anadolu'daki konumunu sağlamlaştırmış, İsa Çelebi'yi bertaraf etmiş, ardından Musa Çelebi'yi Rumeli'de Süleyman'a karşı desteklemiş ve son olarak Musa'yı da yenerek devleti 1413'te yeniden birleştirmiştir.
+      </div>
+
+      <h2>Devletin Yeniden İnşası</h2>
+      <p>Çelebi Mehmed (I. Mehmed), 1413'ten 1421'deki vefatına kadar devleti yeniden toparlamıştır. Kaybedilen Anadolu beyliklerinin bir kısmını geri almış, Rumeli'deki Osmanlı otoritesini yeniden tesis etmiş ve devlet kurumlarını restore etmiştir. Fetret Devri, paradoksal olarak Osmanlı Devleti'nin ne kadar sağlam temeller üzerine kurulduğunu göstermiştir — 11 yıllık iç savaşa rağmen devlet tamamen yıkılmamıştır.</p>
+
+      <h2>Şeyh Bedreddin İsyanı</h2>
+      <p>Fetret Devri'nin en dikkat çekici olaylarından biri, Şeyh Bedreddin'in 1416 yılındaki isyanıdır. Rumeli ve Batı Anadolu'da geniş bir taban bulan bu hareket, hem dini hem de sosyal boyutlarıyla Osmanlı tarihinin en karmaşık olaylarından biridir.</p>
+    `
+  },
+  {
+    id: "m12",
+    num: "12",
+    title: "Batı Anadolu İsyanları ve Yeniden Merkezileşme",
+    shortTitle: "Yeniden Merkezileşme",
+    date: "1413 – 1421",
+    dateRange: "1413 – 1421",
+    region: "İzmir – Samsun – Kastamonu – Konya hattı",
+    thumb: "haritalar/_Kaynaklar_Genel/Anadolu_Eyalet_1795.png",
+    maps: [
+      {src:"haritalar/_Kaynaklar_Genel/Anadolu_Eyalet_1795.png", title:"Anadolu Eyaleti 1795", desc:"Osmanlı Anadolu eyalet yapısı (referans)"},
+      {src:"haritalar/_Kaynaklar_Genel/Osmanli_16-17yy.jpg", title:"Osmanlı 16-17. yy", desc:"Merkezileşmenin tamamlandığı dönemdeki Osmanlı toprakları"}
+    ],
+    summary: "Çelebi Mehmed, devleti birleştirdikten sonra Batı Anadolu'daki isyanları bastırmış, Anadolu beyliklerini tekrar kontrol altına almış ve merkezi otoriteyi yeniden tesis etmiştir.",
+    content: `
+      <h2>Toparlanma Dönemi</h2>
+      <p>Çelebi Mehmed, Fetret Devri'ni sona erdirdikten sonra devletin yeniden inşasına odaklanmıştır. Ancak bu süreç kolay olmamıştır. Timur'un ihya ettiği Anadolu beylikleri bağımsız hareket ediyor, Batı Anadolu'da çeşitli isyanlar patlak veriyordu.</p>
+
+      <h2>Düzmece Mustafa Olayı</h2>
+      <p>Fetret Devri'nin en ilginç ve tartışmalı figürlerinden biri "Düzmece" Mustafa'dır. Yıldırım Bayezid'in oğlu olduğunu iddia eden Mustafa, Bizans desteğiyle Rumeli'de taht mücadelesine girişmiştir. Çelebi Mehmed bu tehdidi bertaraf etmiş, ancak Mustafa meselesi II. Murad döneminde tekrar gündeme gelecektir.</p>
+
+      <div class="highlight">
+        <strong>Karaman Meselesi:</strong> Karamanoğulları, Fetret Devri'nde en çok toprak kazanan beyliktir. Çelebi Mehmed, Karaman'a karşı birkaç sefer düzenlemiş ancak tam bir hâkimiyet kuramamıştır. Karaman sorunu ancak II. Mehmed (Fatih) döneminde kesin olarak çözülecektir.
+      </div>
+
+      <h2>Restorasyonun Temelleri</h2>
+      <ul>
+        <li>Timar sistemi yeniden düzenlenmiştir</li>
+        <li>Yeniçeri Ocağı tekrar yapılandırılmıştır</li>
+        <li>Rumeli'deki vassal ilişkiler yenilenmiştir</li>
+        <li>Devlet hazinesi yeniden doldurulmuştur</li>
+        <li>İlmiye sınıfı ve medreseler restore edilmiştir</li>
+      </ul>
+
+      <h2>Çelebi Mehmed'in Mirası</h2>
+      <p>I. Mehmed, 1421'de vefat ettiğinde, oğlu II. Murad'a toparlanma yolundaki bir devlet bırakmıştır. Onun "ikinci kurucu" olarak anılması boşuna değildir. Ankara felaketi sonrası tamamen dağılabilecek bir devleti, sabırlı diplomasi ve kararlı askeri eylemlerle ayakta tutmuştur.</p>
+      <p>II. Murad ve ardından Fatih Sultan Mehmed, Çelebi Mehmed'in attığı temeller üzerinde Osmanlı İmparatorluğu'nu inşa edecektir. 1453'teki İstanbul'un fethi, kuruluş döneminde başlayan büyük vizyonun nihai gerçekleşmesi olacaktır.</p>
+    `
+  }
+];
+
+// General gallery
+const generalMaps = [
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_1356-1897.jpg", title:"Osmanlı 1356–1897", desc:"Osmanlı İmparatorluğu'nun yüzyıllar arası genişlemesi"},
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_Imparatorlugu_1683.png", title:"Osmanlı 1683 — Doruk Noktası", desc:"İmparatorluğun en geniş sınırları"},
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_1700.jpg", title:"Osmanlı 1700 (Homann)", desc:"18. yüzyıl başında Osmanlı toprakları"},
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_1801.jpg", title:"Osmanlı 1801", desc:"19. yüzyıl başı Osmanlı haritası"},
+  {src:"haritalar/_Kaynaklar_Genel/Cedid_Atlas_Balkanlar_1803.jpg", title:"Cedid Atlas — Balkanlar 1803", desc:"İlk Osmanlıca basılı atlas olan Cedid Atlas'tan Balkanlar"},
+  {src:"haritalar/_Kaynaklar_Genel/Avrupa_Osmanli_Gelisimi.jpg", title:"Avrupa'da Osmanlı Gelişimi", desc:"Osmanlı'nın Avrupa'daki genişleme süreci"},
+  {src:"haritalar/_Kaynaklar_Genel/Dogu_Akdeniz_1450.svg", title:"Doğu Akdeniz 1450", desc:"15. yüzyıl ortasında Doğu Akdeniz dünyası"},
+  {src:"haritalar/_Kaynaklar_Genel/Anadolu_Eyalet_1795.png", title:"Anadolu Eyaleti 1795", desc:"Osmanlı Anadolu eyalet yapısı"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Osmanli_1801.jpg", title:"Osmanlı 1801 (PCL)", desc:"Perry-Castañeda Library — Osmanlı haritası"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Osmanli_1683-1923.jpg", title:"Osmanlı Dağılımı 1683–1923", desc:"Osmanlı toprak kayıplarının zaman çizelgesi"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Balkanlar_1856.jpg", title:"Balkanlar 1856", desc:"19. yüzyıl ortasında Balkan Yarımadası"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Balkan_Devletleri_1899.jpg", title:"Balkan Devletleri 1899", desc:"Balkan devletlerinin 19. yüzyıl sonu sınırları"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Balkan_Etnik_Dagilim.jpg", title:"Balkan Etnik Dağılımı", desc:"Balkan Yarımadası'nın etnik yapısı"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Dogu_Avrupa_1878.jpg", title:"Doğu Avrupa 1878", desc:"Berlin Kongresi sonrası Doğu Avrupa"},
+  {src:"haritalar/_Kaynaklar_Genel/Balkanlar_1912.jpg", title:"Balkanlar 1912", desc:"Balkan Savaşları öncesi Balkan Yarımadası"},
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_Animasyon.gif", title:"Osmanlı Genişleme Animasyonu", desc:"Osmanlı topraklarının zaman içindeki değişimi"},
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_1830-1923_Animasyon.gif", title:"Osmanlı Dağılış Animasyonu", desc:"1830–1923 arası toprak kayıpları animasyonu"},
+  {src:"haritalar/_Kaynaklar_Genel/Sevr_Bolgesi.gif", title:"Sevr Antlaşması Bölgesi", desc:"Sevr Antlaşması ile öngörülen paylaşım"},
+  {src:"haritalar/_Kaynaklar_Genel/PCL_Osmanli_Dagilis.jpg", title:"Osmanlı Dağılışı", desc:"Osmanlı İmparatorluğu'nun genel dağılış süreci"},
+  {src:"haritalar/_Kaynaklar_Genel/Osmanli_1683_Toprak_Kazanimlari.svg", title:"Toprak Kazanımları (SVG)", desc:"1683'e kadar Osmanlı toprak kazanımları — vektör harita"}
+];
+
+const sources = [
+  {name:"Wikimedia Commons", desc:"Atlas of the Ottoman Empire — açık kaynak tarihi haritalar", url:"https://commons.wikimedia.org/wiki/Atlas_of_the_Ottoman_Empire"},
+  {name:"Perry-Castañeda Library", desc:"UT Austin — Avrupa tarihi haritaları koleksiyonu", url:"https://maps.lib.utexas.edu/maps/historical/history_europe.html"},
+  {name:"PCL Balkan Haritaları", desc:"UT Austin — Balkanlar tarihi haritaları", url:"https://maps.lib.utexas.edu/maps/historical/history_balkans.html"},
+  {name:"Library of Congress", desc:"Osmanlı idari haritaları koleksiyonu", url:"https://www.loc.gov/resource/g7431f.ct002181/?st=slideshow"},
+  {name:"David Rumsey Map Collection", desc:"150.000+ tarihi harita koleksiyonu", url:"https://www.davidrumsey.com/"},
+  {name:"World Historical Gazetteer", desc:"Tarihi coğrafya veritabanı", url:"https://whgazetteer.org/"},
+  {name:"OpenHistoricalMap", desc:"Tarihi haritalar için açık kaynak proje", url:"https://www.openhistoricalmap.org/"}
+];
+
+// ===== RENDER =====
+function renderTimeline() {
+  const c = document.getElementById('timelineContainer');
+  c.innerHTML = periods.map((p,i) => `
+    <div class="tl-item" data-index="${i}">
+      <div class="tl-dot"></div>
+      <div class="tl-content" onclick="openDetail('${p.id}')">
+        <span class="tl-date">${p.dateRange}</span>
+        <h3 class="tl-title">${p.shortTitle}</h3>
+        <p class="tl-desc">${p.summary.substring(0,120)}...</p>
+        <p class="tl-maps">🗺️ ${p.maps.length} harita</p>
+        <img class="tl-thumb" src="${p.thumb}" alt="${p.title}" loading="lazy">
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderPeriods() {
+  const c = document.getElementById('periodsGrid');
+  c.innerHTML = periods.map(p => `
+    <div class="period-card" onclick="openDetail('${p.id}')">
+      <img src="${p.thumb}" alt="${p.title}" loading="lazy">
+      <div class="period-card-body">
+        <div class="date">${p.dateRange} · ${p.region.split('–')[0].trim()}</div>
+        <h3>${p.title}</h3>
+        <p>${p.summary.substring(0,150)}...</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGallery() {
+  const c = document.getElementById('galleryGrid');
+  c.innerHTML = generalMaps.map(m => `
+    <div class="gallery-item" onclick="openLightbox('${m.src}','${m.title}')">
+      <img src="${m.src}" alt="${m.title}" loading="lazy">
+      <div class="caption"><strong>${m.title}</strong><br>${m.desc}</div>
+    </div>
+  `).join('');
+}
+
+function renderSources() {
+  const c = document.getElementById('sourcesGrid');
+  c.innerHTML = sources.map(s => `
+    <div class="source-card">
+      <h4>${s.name}</h4>
+      <p>${s.desc}</p>
+      <a href="${s.url}" target="_blank" rel="noopener">${s.url}</a>
+    </div>
+  `).join('');
+}
+
+// ===== DETAIL OVERLAY =====
+function openDetail(id) {
+  const p = periods.find(x => x.id === id);
+  if (!p) return;
+  const overlay = document.getElementById('detailOverlay');
+  const content = document.getElementById('detailContent');
+  content.innerHTML = `
+    <div class="detail-header">
+      <img src="${p.thumb}" alt="${p.title}">
+      <div class="detail-header-content">
+        <span class="tl-date" style="font-size:0.9rem">${p.dateRange}</span>
+        <h1>${p.title}</h1>
+        <p class="period-range">${p.region}</p>
+      </div>
+    </div>
+    <div class="detail-body">
+      ${p.content}
+      <h2>Dönem Haritaları</h2>
+      <div class="map-gallery">
+        ${p.maps.map(m => `
+          <div class="map-card" onclick="openLightbox('${m.src}','${m.title} — ${m.desc}')">
+            <img src="${m.src}" alt="${m.title}" loading="lazy">
+            <div class="map-card-info">
+              <h4>${m.title}</h4>
+              <p>${m.desc}</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  overlay.classList.add('active');
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('navLinks').classList.remove('open');
+}
+
+// ===== LIGHTBOX =====
+function openLightbox(src, caption) {
+  event.stopPropagation();
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightboxCaption').textContent = caption;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+// ===== NAV =====
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ===== SCROLL ANIMATION =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.15});
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('lightbox').classList.contains('active')) closeLightbox();
+    else if (document.getElementById('detailOverlay').classList.contains('active')) closeDetail();
+  }
+});
+
+// ===== INIT =====
+renderTimeline();
+renderPeriods();
+renderGallery();
+renderSources();
+document.querySelectorAll('.tl-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
