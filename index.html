@@ -168,18 +168,13 @@ footer a{color:var(--gold-dim);text-decoration:none}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold-dim)}
 
-/* SOURCE BADGES */
-.src-badge{position:absolute;top:0.5rem;right:0.5rem;padding:0.2rem 0.6rem;border-radius:3px;font-size:0.7rem;font-weight:700;letter-spacing:0.03em;z-index:2;text-decoration:none;transition:all 0.3s;opacity:0.9;cursor:pointer;line-height:1.4}
-.src-badge:hover{opacity:1;transform:scale(1.05)}
-.src-badge.pcl{background:#1a5276;color:#aed6f1;border:1px solid #2980b9}
-.src-badge.wiki{background:#1e4620;color:#82e0aa;border:1px solid #27ae60}
-.src-badge.loc{background:#6c3483;color:#d7bde2;border:1px solid #8e44ad}
-.src-badge.rumsey{background:#7d4e00;color:#f9e79f;border:1px solid #d4ac0d}
-.src-badge.cedid{background:#78281f;color:#f5b7b1;border:1px solid #c0392b}
-.src-badge.other{background:#2c3e50;color:#bdc3c7;border:1px solid #7f8c8d}
+/* SOURCE LINK ICON */
+.src-link{position:absolute;bottom:0.4rem;right:0.4rem;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2;text-decoration:none;transition:all 0.25s;opacity:0;font-size:11px;line-height:1;color:var(--text-dim);border:1px solid rgba(255,255,255,0.15)}
+.src-link:hover{background:rgba(200,164,92,0.85);color:var(--bg);opacity:1;transform:scale(1.15)}
+.map-card:hover .src-link,.gallery-item:hover .src-link,.tl-content:hover .src-link{opacity:0.8}
 .map-card,.gallery-item{position:relative}
-.lightbox-source{display:inline-block;margin-top:0.4rem;padding:0.15rem 0.5rem;border-radius:3px;font-size:0.75rem;font-weight:600;text-decoration:none;transition:all 0.2s}
-.lightbox-source:hover{opacity:0.8}
+.lightbox-source{display:inline-block;margin-left:0.5rem;font-size:0.75rem;color:var(--gold-dim);text-decoration:none;opacity:0.8;transition:opacity 0.2s}
+.lightbox-source:hover{opacity:1;text-decoration:underline}
 
 /* LOADING */
 .loading{display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-dim)}
@@ -793,11 +788,11 @@ function detectSource(filename) {
 }
 function srcBadgeHtml(src) {
   const s = detectSource(src);
-  return `<a class="src-badge ${s.cls}" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Kaynak: ${s.label}">${s.label}</a>`;
+  return `<a class="src-link" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Kaynak: ${s.label}">🔗</a>`;
 }
 function srcBadgeForLightbox(src) {
   const s = detectSource(src);
-  return `<a class="lightbox-source src-badge ${s.cls}" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="margin-left:0.5rem">${s.label} ↗</a>`;
+  return `<a class="lightbox-source" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">[${s.label} ↗]</a>`;
 }
 
 // ===== RENDER =====
