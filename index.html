@@ -168,6 +168,19 @@ footer a{color:var(--gold-dim);text-decoration:none}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold-dim)}
 
+/* SOURCE BADGES */
+.src-badge{position:absolute;top:0.5rem;right:0.5rem;padding:0.2rem 0.6rem;border-radius:3px;font-size:0.7rem;font-weight:700;letter-spacing:0.03em;z-index:2;text-decoration:none;transition:all 0.3s;opacity:0.9;cursor:pointer;line-height:1.4}
+.src-badge:hover{opacity:1;transform:scale(1.05)}
+.src-badge.pcl{background:#1a5276;color:#aed6f1;border:1px solid #2980b9}
+.src-badge.wiki{background:#1e4620;color:#82e0aa;border:1px solid #27ae60}
+.src-badge.loc{background:#6c3483;color:#d7bde2;border:1px solid #8e44ad}
+.src-badge.rumsey{background:#7d4e00;color:#f9e79f;border:1px solid #d4ac0d}
+.src-badge.cedid{background:#78281f;color:#f5b7b1;border:1px solid #c0392b}
+.src-badge.other{background:#2c3e50;color:#bdc3c7;border:1px solid #7f8c8d}
+.map-card,.gallery-item{position:relative}
+.lightbox-source{display:inline-block;margin-top:0.4rem;padding:0.15rem 0.5rem;border-radius:3px;font-size:0.75rem;font-weight:600;text-decoration:none;transition:all 0.2s}
+.lightbox-source:hover{opacity:0.8}
+
 /* LOADING */
 .loading{display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--text-dim)}
 </style>
@@ -762,6 +775,31 @@ const sources = [
   {name:"OpenHistoricalMap", desc:"Tarihi haritalar için açık kaynak proje", url:"https://www.openhistoricalmap.org/"}
 ];
 
+// ===== SOURCE DETECTION =====
+const srcDb = {
+  pcl:   {label:"PCL / UT Austin", cls:"pcl", url:"https://maps.lib.utexas.edu/maps/historical/history_europe.html"},
+  wiki:  {label:"Wikimedia Commons", cls:"wiki", url:"https://commons.wikimedia.org/wiki/Atlas_of_the_Ottoman_Empire"},
+  loc:   {label:"Library of Congress", cls:"loc", url:"https://www.loc.gov/resource/g7431f.ct002181/?st=slideshow"},
+  cedid: {label:"Cedid Atlas", cls:"cedid", url:"https://commons.wikimedia.org/wiki/Atlas_of_the_Ottoman_Empire"},
+  rumsey:{label:"David Rumsey", cls:"rumsey", url:"https://www.davidrumsey.com/"},
+  other: {label:"Wikimedia Commons", cls:"wiki", url:"https://commons.wikimedia.org/wiki/Atlas_of_the_Ottoman_Empire"}
+};
+function detectSource(filename) {
+  const f = filename.split('/').pop();
+  if (f.startsWith('PCL_')) return srcDb.pcl;
+  if (f.startsWith('Cedid_')) return srcDb.cedid;
+  if (f.includes('Eyalet_1861') || f.includes('Eyalet_1795') || f.includes('Eyalet_1609')) return srcDb.loc;
+  return srcDb.wiki;
+}
+function srcBadgeHtml(src) {
+  const s = detectSource(src);
+  return `<a class="src-badge ${s.cls}" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Kaynak: ${s.label}">${s.label}</a>`;
+}
+function srcBadgeForLightbox(src) {
+  const s = detectSource(src);
+  return `<a class="lightbox-source src-badge ${s.cls}" href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="margin-left:0.5rem">${s.label} ↗</a>`;
+}
+
 // ===== RENDER =====
 function renderTimeline() {
   const c = document.getElementById('timelineContainer');
@@ -773,7 +811,10 @@ function renderTimeline() {
         <h3 class="tl-title">${p.shortTitle}</h3>
         <p class="tl-desc">${p.summary.substring(0,120)}...</p>
         <p class="tl-maps">🗺️ ${p.maps.length} harita</p>
-        <img class="tl-thumb" src="${p.thumb}" alt="${p.title}" loading="lazy">
+        <div style="position:relative">
+          <img class="tl-thumb" src="${p.thumb}" alt="${p.title}" loading="lazy">
+          ${srcBadgeHtml(p.thumb)}
+        </div>
       </div>
     </div>
   `).join('');
@@ -783,7 +824,10 @@ function renderPeriods() {
   const c = document.getElementById('periodsGrid');
   c.innerHTML = periods.map(p => `
     <div class="period-card" onclick="openDetail('${p.id}')">
-      <img src="${p.thumb}" alt="${p.title}" loading="lazy">
+      <div style="position:relative;overflow:hidden">
+        <img src="${p.thumb}" alt="${p.title}" loading="lazy">
+        ${srcBadgeHtml(p.thumb)}
+      </div>
       <div class="period-card-body">
         <div class="date">${p.dateRange} · ${p.region.split('–')[0].trim()}</div>
         <h3>${p.title}</h3>
@@ -797,6 +841,7 @@ function renderGallery() {
   const c = document.getElementById('galleryGrid');
   c.innerHTML = generalMaps.map(m => `
     <div class="gallery-item" onclick="openLightbox('${m.src}','${m.title}')">
+      ${srcBadgeHtml(m.src)}
       <img src="${m.src}" alt="${m.title}" loading="lazy">
       <div class="caption"><strong>${m.title}</strong><br>${m.desc}</div>
     </div>
@@ -835,6 +880,7 @@ function openDetail(id) {
       <div class="map-gallery">
         ${p.maps.map(m => `
           <div class="map-card" onclick="openLightbox('${m.src}','${m.title} — ${m.desc}')">
+            ${srcBadgeHtml(m.src)}
             <img src="${m.src}" alt="${m.title}" loading="lazy">
             <div class="map-card-info">
               <h4>${m.title}</h4>
@@ -860,7 +906,7 @@ function closeDetail() {
 function openLightbox(src, caption) {
   event.stopPropagation();
   document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightboxCaption').textContent = caption;
+  document.getElementById('lightboxCaption').innerHTML = caption + ' ' + srcBadgeForLightbox(src);
   document.getElementById('lightbox').classList.add('active');
 }
 function closeLightbox() {
